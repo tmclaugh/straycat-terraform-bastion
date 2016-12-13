@@ -25,4 +25,8 @@ variable "aws_availability_zones" {
   default = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
-
+/*
+* FIXME: can't gigure out how to handle personal repos.  Only orgs?
+variable "github_token" {}
+variable "github_organization" {}
+*/

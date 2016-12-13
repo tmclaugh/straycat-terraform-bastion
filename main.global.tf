@@ -1,4 +1,6 @@
-
+/*
+* bastion host
+*/
 module "bastion" {
   source            = "./modules/bastion"
   instance_key_name = "${var.instance_key_name}"
@@ -17,3 +19,13 @@ module "bastion" {
     private = "${data.terraform_remote_state.infrastructure.vpc_private.default_security_group_id}"
   }
 }
+
+/*
+* FIXME: can't gigure out how to handle personal repos.  Only orgs?
+resource "github_repository" "bastion" {
+  name = "straycat-terraform-bastion"
+  description = "Terraform deploy of bastion host"
+
+  has_issues = true
+}
+*/
