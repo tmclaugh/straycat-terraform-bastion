@@ -20,7 +20,7 @@ skel:
 		test -L environments/$$_env/Makefile || ln -s ../../Makefile.global environments/$$_env/Makefile; \
 	done
 	
-	for _file in variables.global.tf outputs.global.tf provider.global.tf data.global.tf; do \
+	for _file in variables.global.tf outputs.global.tf providers.global.tf data.global.tf main.global.tf; do \
 		test -f $$_file || touch $$_file; \
 		for _env in master prod dev; do \
 			test -L environments/$$_env/$${_file/.global./.} || ln -s ../../$${_file} environments/$$_env/$${_file/.global./.}; \
