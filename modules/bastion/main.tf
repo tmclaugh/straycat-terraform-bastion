@@ -22,7 +22,7 @@ resource "aws_security_group" "bastion" {
 # NOTE: In general I'd prefer to not do this but in this case I think it makes
 # the most sense to alter an existing SG.
 resource "aws_security_group_rule" "vpc_allow_bastion" {
-  count                     = "${length(var.security_group_other_vpc_sgs)}"
+  count                     = "${length(split(",", var.security_group_other_vpc_sgs))}"
   type                      = "ingress"
   from_port                 = 22
   to_port                   = 22

@@ -38,9 +38,14 @@ variable "instance_vpc_id" {
 # FIXME: Using a list tripped over a bug when trying to get the length of an
 # array populated by output values. Converted to a map because that works for
 # some reason...
+#
+# UPDATE: Converted to ":" delimited string because in 0.8.x my previous idea
+# stopped working.
+#
+# ref. https://github.com/hashicorp/terraform/issues/3888
 variable "security_group_other_vpc_sgs" {
-  type = "map"
-  description = "A list of SGs to allow bastion traffic from."
-  default = {}
+  type = "string"
+  description = "A ',' delimited list of SGs"
+  default = ""
 }
 

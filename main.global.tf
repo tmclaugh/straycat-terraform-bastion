@@ -15,9 +15,11 @@ module "bastion" {
 
   instance_vpc_name             = "${data.terraform_remote_state.infrastructure.vpc_public.vpc_name}"
   instance_vpc_id               = "${data.terraform_remote_state.infrastructure.vpc_public.vpc_id}"
-  security_group_other_vpc_sgs  = {
-    private = "${data.terraform_remote_state.infrastructure.vpc_private.default_security_group_id}"
-  }
+  security_group_other_vpc_sgs  = "${
+    join(",",
+      list(data.terraform_remote_state.infrastructure.vpc_private.default_security_group_id)
+    )
+  }"
 }
 
 /*
