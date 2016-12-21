@@ -1,3 +1,8 @@
+/*
+* Variables
+*/
+
+# FIXME: This should be provided by infrastructure.
 variable "instance_ami_id" {
   type = "string"
   description = "AMI ID for bastion host."
