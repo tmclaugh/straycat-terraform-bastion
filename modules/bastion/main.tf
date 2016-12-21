@@ -28,7 +28,7 @@ resource "aws_security_group_rule" "vpc_allow_bastion" {
   to_port                   = 22
   protocol                  = "tcp"
   source_security_group_id  = "${aws_security_group.bastion.id}"
-  security_group_id         = "${element(values(var.security_group_other_vpc_sgs), count.index)}"
+  security_group_id         = "${element(split(",", var.security_group_other_vpc_sgs), count.index)}"
 
 }
 
