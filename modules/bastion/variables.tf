@@ -35,17 +35,14 @@ variable "instance_vpc_id" {
   description = "ID of VPC bastion will live in."
 }
 
-# FIXME: Using a list tripped over a bug when trying to get the length of an
-# array populated by output values. Converted to a map because that works for
-# some reason...
-#
-# UPDATE: Converted to ":" delimited string because in 0.8.x my previous idea
-# stopped working.
+# FIXME: We can't calculate the length of a list that contains module outputs
+# or data source values.  Right now we accept and handle a singe VPC as a
+# string.
 #
 # ref. https://github.com/hashicorp/terraform/issues/3888
 variable "security_group_other_vpc_sgs" {
   type = "string"
-  description = "A ',' delimited list of SGs"
+  description = "A single VPC even though we should handle a list..."
   default = ""
 }
 
