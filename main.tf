@@ -1,21 +1,14 @@
 /*
 * bastion host
 */
-module "bastion" {
-  source            = "./modules/bastion"
-  instance_key_name = "${var.instance_key_name}"
-  instance_security_group_id_default = "${data.terraform_remote_state.infrastructure.vpc_public.default_security_group_id}"
 
-  instance_subnet_id = "${
-    lookup(
-      data.terraform_remote_state.infrastructure.vpc_public.subnet_id_by_availability_zone_public,
-      var.aws_availability_zones[0]
-    )
-  }"
-
-  instance_vpc_name             = "${data.terraform_remote_state.infrastructure.vpc_public.vpc_name}"
-  instance_vpc_id               = "${data.terraform_remote_state.infrastructure.vpc_public.vpc_id}"
-  security_group_other_vpc_sgs  = "${data.terraform_remote_state.infrastructure.vpc_private.default_security_group_id}"
+data "terraform_remote_state" "aws_vpc" {
+  backend = "s3"
+  config = {
+    bucket  = "${var.domain}-${var.environment}-terraform"
+    key     = "aws_vpc.tfstate"
+    region  = "${var.aws_region}"
+  }
 }
 
 /*
@@ -27,3 +20,114 @@ resource "github_repository" "bastion" {
   has_issues = true
 }
 */
+
+/*
+* Deploy Bastion host.
+*/
+
+/*
+* variables
+*/
+variable "environment" {}
+variable "domain" {}
+variable "instance_key_name" {}
+variable "aws_region" {}
+variable "asg_min_size" {}
+variable "asg_max_size" {}
+variable "asg_desired_capacity" {}
+
+/*
+* resources
+*/
+module "bastion" {
+  source                = "github.com/tmclaugh/tf_straycat_svc"
+  svc_name              = "bastion"
+  account_id            = "${var.account_id}"
+  aws_region            = "${var.aws_region}"
+  subnet_type           = "${var.subnet_type}"
+  asg_min_size          = "${var.asg_min_size}"
+  asg_max_size          = "${var.asg_max_size}"
+  asg_desired_capacity  = "${var.asg_desired_capacity}"
+  instance_key_name     = "${var.instance_key_name}"
+}
+
+/*
+* outputs
+*/
+output "launch_config_id" {
+  value = "${module.central_registration_nodejs.launch_config_id}"
+}
+
+output "autoscaling_group_id" {
+  value = "${module.central_registration_nodejs.autoscaling_group_id}"
+}
+
+output "autoscaling_group_name" {
+  value = "${module.central_registration_nodejs.autoscaling_group_name}"
+}
+
+output "autoscaling_group_availability_zones" {
+  value = "${module.central_registration_nodejs.autoscaling_group_availability_zones}"
+}
+
+output "autoscaling_group_min_size" {
+  value = "${module.central_registration_nodejs.autoscaling_group_min_size}"
+}
+
+output "autoscaling_group_max_size" {
+  value = "${module.central_registration_nodejs.autoscaling_group_max_size}"
+}
+
+output "autoscaling_group_desired_capacity" {
+  value = "${module.central_registration_nodejs.autoscaling_group_desired_capacity}"
+}
+
+output "autoscaling_group_launch_configuration" {
+  value = "${module.central_registration_nodejs.autoscaling_group_launch_configuration}"
+}
+
+output "autoscaling_group_vpc_zone_identifier" {
+  value = "${module.central_registration_nodejs.autoscaling_group_vpc_zone_identifier}"
+}
+
+output "iam_role_arn" {
+  value = "${module.central_registration_nodejs.iam_role_arn}"
+}
+
+output "iam_role_name" {
+  value = "${module.central_registration_nodejs.iam_role_name}"
+}
+
+output "iam_instance_profile_arn" {
+  value = "${module.central_registration_nodejs.iam_instance_profile_arn}"
+}
+
+output "iam_instance_profile_name" {
+  value = "${module.central_registration_nodejs.iam_instance_profile_name}"
+}
+
+output "iam_instance_profile_roles" {
+  value = "${module.central_registration_nodejs.iam_instance_profile_roles}"
+}
+
+output "security_group_id" {
+  value = "${module.central_registration_nodejs.security_group_id}"
+}
+
+output "security_group_vpc_id" {
+  value = "${module.central_registration_nodejs.security_group_vpc_id}"
+}
+
+output "security_group_ingress" {
+  value = "${module.central_registration_nodejs.security_group_ingress}"
+}
+
+output "security_group_egress" {
+  value = "${module.central_registration_nodejs.security_group_egress}"
+}
+
+output "security_group_name" {
+  value = "${module.central_registration_nodejs.security_group_name}"
+}
+
+
