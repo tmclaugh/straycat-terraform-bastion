@@ -14,6 +14,8 @@ terragrunt = {
 /*
 * aws vars for Terraform
 */
+svc_name = "bastion"
+
 domain                  = "straycat.dhs.org"
 account_id              = "straycat"  # AWS credentials profile name
 aws_profile             = "straycat"

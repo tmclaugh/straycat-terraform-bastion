@@ -56,7 +56,7 @@ resource "github_repository" "bastion" {
 */
 module "bastion" {
   source                = "github.com/tmclaugh/tf_straycat_svc"
-  svc_name              = "bastion"
+  svc_name              = "${var.svc_name}"
   account_id            = "${var.account_id}"
   aws_region            = "${var.aws_region}"
   subnet_type           = "${var.subnet_type}"
