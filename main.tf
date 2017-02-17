@@ -13,6 +13,7 @@ variable "asg_max_size" {}
 variable "asg_desired_capacity" {}
 variable "subnet_type" {}
 variable "security_group_access" {}
+variable "security_group_service_ingress" { type = "map" }
 variable "security_group_default_ingress" { type = "map" }
 
 
@@ -63,6 +64,7 @@ module "bastion" {
   asg_max_size          = "${var.asg_max_size}"
   asg_desired_capacity  = "${var.asg_desired_capacity}"
   instance_key_name     = "${var.instance_key_name}"
+  security_group_service_ingress_external = "${var.security_group_service_ingress}"
 }
 
 resource "aws_security_group_rule" "bastion_ssh_ingress" {
@@ -139,14 +141,6 @@ output "security_group_id" {
 
 output "security_group_vpc_id" {
   value = "${module.bastion.security_group_vpc_id}"
-}
-
-output "security_group_ingress" {
-  value = "${module.bastion.security_group_ingress}"
-}
-
-output "security_group_egress" {
-  value = "${module.bastion.security_group_egress}"
 }
 
 output "security_group_name" {

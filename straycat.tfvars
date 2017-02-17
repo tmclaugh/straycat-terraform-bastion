@@ -26,6 +26,13 @@ asg_desired_capacity    = 1
 
 subnet_type = "public"
 
+security_group_service_ingress = {
+  from_port = 22
+  to_port = 22
+  protocol = "tcp"
+  cidr_block = "0.0.0.0/0"
+}
+
 # We control what this bastion is able to tack to from here.
 security_group_access = "all"
 security_group_default_ingress = {
