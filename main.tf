@@ -3,6 +3,7 @@
 */
 
 // Variables
+variable "svc_name" {}
 variable "domain" {}
 variable "instance_key_name" {}
 variable "account_id" {}
