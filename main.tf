@@ -6,7 +6,7 @@
 variable "svc_name" {}
 variable "domain" {}
 variable "instance_key_name" {}
-variable "account_id" {}
+variable "aws_account" {}
 variable "aws_profile" {}
 variable "aws_region" {}
 variable "asg_min_size" {}
@@ -36,7 +36,7 @@ provider "github" {
 data "terraform_remote_state" "aws_vpc" {
   backend = "s3"
   config = {
-    bucket  = "${var.domain}-${var.account_id}-terraform"
+    bucket  = "${var.domain}-${var.aws_account}-terraform"
     key     = "aws_vpc.tfstate"
     region  = "${var.aws_region}"
   }
@@ -58,7 +58,7 @@ resource "github_repository" "bastion" {
 module "bastion" {
   source                = "github.com/tmclaugh/tf_straycat_svc"
   svc_name              = "${var.svc_name}"
-  account_id            = "${var.account_id}"
+  aws_account           = "${var.aws_account}"
   aws_region            = "${var.aws_region}"
   subnet_type           = "${var.subnet_type}"
   asg_min_size          = "${var.asg_min_size}"
