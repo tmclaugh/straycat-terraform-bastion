@@ -36,7 +36,7 @@ security_group_service_ingress = {
 }
 
 # We control what this bastion is able to tack to from here.
-security_group_access = "all"
+security_group_access = ["public", "private"]
 security_group_default_ingress = {
   from_port             = 22
   to_port               = 22
