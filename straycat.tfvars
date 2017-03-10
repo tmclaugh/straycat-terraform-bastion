@@ -20,7 +20,6 @@ aws_s3_prefix           = "straycat-dhs-org"
 aws_account             = "straycat"  # AWS credentials profile name
 aws_profile             = "straycat"
 aws_region              = "us-east-1"
-instance_key_name       = "straycat-tmclaugh-threatstack"
 
 asg_min_size            = 0
 asg_max_size            = 0
